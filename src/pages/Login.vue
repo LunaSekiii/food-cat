@@ -1,3 +1,187 @@
+<style>
+* {
+    /* 去除浏览器默认内外边距 */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 去除input的轮廓 */
+input {
+    outline: none;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    /* 溢出隐藏 */
+    overflow-x: hidden;
+    display: flex;
+    background: #FFFDED;
+}
+
+.box {
+    width: 1050px;
+    height: 600px;
+    display: flex;
+    /* 相对定位 */
+    position: relative;
+    z-index: 2;
+    background-color: #FFF5E9;
+    margin: auto;
+    /* 设置圆角 */
+    border-radius: 50px;
+    /* 设置盒子阴影 */
+    box-shadow: 4px 4px 3px rgba(0 ,0, 0, .1);
+    
+    
+}
+
+.login-form,
+.register-form{
+    /* 平分盒子？ */
+    flex: 1;
+    height: 100%;
+}
+
+
+
+.register-form .title-box{
+    height: 200px;
+    line-height: 300px;
+
+}
+
+.login-form .title-box{
+    height: 250px;
+    line-height: 400px;
+
+}
+
+.title-box h1{
+    text-align: center;
+    letter-spacing: 5px;
+}
+
+.input-box{
+    display: flex;
+    /* 垂直排列 */
+    flex-direction: column;
+    align-items: center;
+}
+
+input{
+    width: 60%;
+    height: 40px;
+    margin-bottom: 20px;
+    text-indent: 4px;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.btn-box{
+    display: flex;
+    justify-content: center;
+}
+
+p{
+    display: block;
+}
+
+button{
+    display: block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    border-radius: 4px;
+    background-color: #FFD6AF;
+    color: #A56221;
+}
+
+/* 按钮悬停时 */
+button:hover {
+    /* 鼠标小手 */
+    cursor: pointer;
+    /* 透明度 */
+    opacity: .8;
+}
+
+* 按钮文字 */
+.btn-box p {
+    height: 30px;
+    line-height: 30px;
+    /* 禁止选中 */
+    user-select: none;
+    font-size: 14px;
+    color: white;
+
+}
+
+.btn-box p:hover {
+    cursor: pointer;
+    border-bottom: 1px solid white;
+}
+
+
+
+
+/* 滑动的盒子 */
+.pre-box {
+    /* 宽度为大盒子的一半 */
+    width: 50%;
+    /* width: var(--width); */
+    height: 100%;
+    /* 绝对定位 */
+    position: absolute;
+    /* 距离大盒子左侧为0 */
+    left: 0;
+    /* 距离大盒子顶部为0 */
+    top: 0;
+    z-index: 99;
+    border-radius: 4px;
+    /* background-color: #edd4dc; */
+    background-image: url(./img/logincatbackground.jpg);
+    box-shadow: 2px 1px 19px rgba(0, 0, 0, .1);
+    /* 动画过渡，先加速再减速 */
+    transition: 0.5s ease-in-out;
+}
+
+/* 滑动盒子的标题 */
+.pre-box h1 {
+    margin-top: 150px;
+    text-align: center;
+    /* 文字间距 */
+    letter-spacing: 5px;
+    color: rgb(254, 146, 92);
+    /* 禁止选中 */
+    user-select: none;
+    /* 文字阴影 */
+    text-shadow: 4px 4px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 滑动盒子的文字 */
+.pre-box p {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 20px 0;
+    /* 禁止选中 */
+    user-select: none;
+    font-weight: bold;
+    color: rgb(120, 38, 38);
+    text-shadow: 4px 4px 3px rgba(0, 0, 0, .1);
+}
+
+
+/* 聚焦时隐藏文字 输入框*/
+input:focus::placeholder {
+    opacity: 0;
+}</style>
+
 <template>
   <!-- 最外层的大盒子 -->
   <div class="box">
