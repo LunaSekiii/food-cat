@@ -1,33 +1,37 @@
 <template>
-  <header>
-    <div @click="goto('home')">FootCat</div>
-    <nav>
-      <div @click="goto('restaurant')">restaurant</div>
-      <div @click="goto('drinks')">drinks</div>
-      <div id="fav">
-        favourite
-        <div id="item">111</div>
-      </div>
-    </nav>
-    <div>user</div>
-  </header>
+  <div id="searchBar">
+    <h1>view by category</h1>
+    <input type="text" name="searchKey" id="searchInput" />
+    <div>
+      <span>All</span>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
+  props: {
+    Ctype: String,
+  },
   data() {
     return {};
   },
+  mounted() {},
   methods: {
     goto(where) {
       this.$router.replace(where);
+    },
+  },
+  computed: {
+    type() {
+      return this.$props.Ctype | "restaurant";
     },
   },
 };
 </script>
 
 <style lang="css">
-header {
+.searchBar {
   width: 100vw;
   height: 10vh;
   text-align: center;
