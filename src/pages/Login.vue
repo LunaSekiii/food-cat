@@ -19,18 +19,19 @@
         </div>
         <!-- 输入框盒子 -->
         <div class="input-box">
-          <input type="text" placeholder="username" />
-          <input type="text" placeholder="email" />
-          <input type="password" placeholder="password" />
-          <input type="password" placeholder="enter again your password" />
+          <input type="text" placeholder="username" v-model="username"/>
+          <input type="text" placeholder="email" v-model="email"/>
+          <input type="password" placeholder="password"  v-model="password"/>
+          <input type="password" placeholder="enter again your password"  v-model="password2"/>
         </div>
         <!-- 按钮盒子 -->
         <div class="btn-box">
-          <button>OK!</button>
+          <button @click="register">OK!</button>
           <!-- 绑定点击事件 -->
           <p @click="mySwitch()">Have account? Login HERE!</p>
         </div>
       </div>
+      
       <!-- 登录盒子 -->
       <div class="login-form">
         <!-- 标题盒子 -->
@@ -39,11 +40,11 @@
         </div>
         <!-- 输入框盒子 -->
         <div class="input-box">
-          <input type="text" placeholder="username" />
-          <input type="password" placeholder="password" />
+          <input type="text" placeholder="email" v-model="email"/>
+          <input type="password" placeholder="password" v-model="password"/>
         </div>
         <!-- 按钮盒子 -->
-        <div class="btn-box">
+        <div class="btn-box"  @click="login">
           <button>OK!</button>
           <!-- 绑定点击事件 -->
           <p @click="mySwitch()">No account? Sign up</p>
@@ -65,17 +66,40 @@ const mySwitch = () => {
   }
   flag = !flag;
 };
+
+import QueryString from 'qs';
 export default {
+  
   data() {
     return {
       isLogin: true,
+
     };
   },
+
   methods: {
     mySwitch() {
       this.isLogin = !this.isLogin;
     },
+
+    register(){
+      this.$axios.post("http://127.0.0.1:3007/api/reguser", QueryString.stringify({username: this.username,
+      email:this.email,
+      password:this.password,
+      password2: this.password2
+      }))
+    },
+
+    login(){
+      this.$axios.post("http://127.0.0.1:3007/api/login", QueryString.stringify({
+      email:this.email,
+      password:this.password,
+      }))
+    },
+
+
   },
+
   computed: {
     preBoxStyle() {
       return !this.isLogin
@@ -84,6 +108,8 @@ export default {
     },
   },
 };
+
+
 </script>
 
 <style scoped>

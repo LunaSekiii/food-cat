@@ -3,7 +3,7 @@
     <Header />
     <SearchBar type="resturant" />
     Restaurant
-    <Contents />
+    <Contents v-bind:items="items"/>
   </div>
 </template>
 
@@ -13,12 +13,24 @@ import SearchBar from "../components/SearchBar";
 import Contents from "../components/Contents";
 export default {
   data() {
-    return {};
+    return {
+      items:[]
+    };
+  },
+  mounted(){
+    this.$axios.get("http://127.0.0.1:3007/api/all/0")
+    .then(res => {
+      console.log(res.data)
+      this.items = res.data.data
+    })
+
   },
   components: {
     Header,
     SearchBar,
     Contents,
   },
+
+  
 };
 </script>

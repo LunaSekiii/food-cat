@@ -1,6 +1,7 @@
 <template>
   <div id="contentBox">
-    <div class="item" v-for="item in items" :key="item.name">
+    <div class="item" v-for="item in items" :key="item.shop_id">
+      <img :src="'https://www.google.com/url?sa=i&url=http%3A%2F%2Fbishun.strokeorder.info%2Fmandarin.php%3Fq%3D%25E5%259B%25BE&psig=AOvVaw1hnLtrxuYBcKhfRhrWWrP6&ust=1674584432662000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCOivrqOn3vwCFQAAAAAdAAAAABAE'" alt="">
       <h1>{{ item.name }}</h1>
     </div>
   </div>
@@ -10,40 +11,19 @@
 export default {
   data() {
     return {
-      items: [
-        {
-          name: "restaurant1",
-          img: "",
-          marked: false,
-        },
-        {
-          name: "restaurant2",
-          img: "",
-          marked: false,
-        },
-        {
-          name: "restaurant3",
-          img: "",
-          marked: false,
-        },
-        {
-          name: "restaurant4",
-          img: "",
-          marked: false,
-        },
-        {
-          name: "restaurant5",
-          img: "",
-          marked: false,
-        },
-        {
-          name: "restaurant6",
-          img: "",
-          marked: false,
-        },
-      ],
+
     };
   },
+  
+  props:{
+    items:{
+      default:[]
+    }
+  },
+  mounted(){
+    console.log(this.items)
+  },
+
   methods: {
     goto(where) {
       this.$router.replace(where);
