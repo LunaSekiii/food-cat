@@ -44,8 +44,8 @@
           <input type="password" placeholder="password" v-model="password"/>
         </div>
         <!-- 按钮盒子 -->
-        <div class="btn-box"  @click="login">
-          <button>OK!</button>
+        <div class="btn-box"  >
+          <button @click="login">OK!</button>
           <!-- 绑定点击事件 -->
           <p @click="mySwitch()">No account? Sign up</p>
         </div>
@@ -68,11 +68,17 @@ const mySwitch = () => {
 };
 
 import QueryString from 'qs';
+import Cookies from "js-cookie";
 export default {
   
   data() {
     return {
       isLogin: true,
+      username: '',
+      password: '',
+      password2: '',
+      email: '',
+
 
     };
   },
@@ -87,14 +93,33 @@ export default {
       email:this.email,
       password:this.password,
       password2: this.password2
+      },{headers : {"content-type": "application/x-www-form-urlencoded"}}).then(res => {
+        console.log(res);
       }))
     },
 
     login(){
-      this.$axios.post("http://127.0.0.1:3007/api/login", QueryString.stringify({
-      email:this.email,
-      password:this.password,
-      }))
+      this.$axios.post("http://127.0.0.1:3007/api/login", 
+      QueryString.stringify({email:this.email,password:this.password,}))
+      .then(res => {
+        if(res.data.status === 0 ){
+          console.log(res)
+          // window.localStorage.setItem('token', res.data.token)
+          // window.localStorage.setItem('username', res.data.username)
+          // Cookies.set("token", res.data.token); 
+          Cookies.set("token", res.data.token, { expires: 7 });
+          console.log(Cookies.get("token"))
+          alert("login successfully")
+          this.$router.push('/home')
+        }else{
+          alert("Login fail, try again later")
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        console.log("请求错误")
+      })
+
     },
 
 

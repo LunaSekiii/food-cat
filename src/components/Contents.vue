@@ -1,8 +1,8 @@
 <template>
   <div id="contentBox">
     <div class="item" v-for="item in items" :key="item.shop_id">
-      <img :src="'https://www.google.com/url?sa=i&url=http%3A%2F%2Fbishun.strokeorder.info%2Fmandarin.php%3Fq%3D%25E5%259B%25BE&psig=AOvVaw1hnLtrxuYBcKhfRhrWWrP6&ust=1674584432662000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCOivrqOn3vwCFQAAAAAdAAAAABAE'" alt="">
       <h1>{{ item.name }}</h1>
+      <img v-bind:src="'http://127.0.0.1:3007/api/pic/'+item.logo" alt=""/>
     </div>
   </div>
 </template>
@@ -47,5 +47,9 @@ export default {
   margin: 10px;
   background-color: #ffe6cf;
   border-radius: 10px;
+}
+
+img{
+  width: 200px;
 }
 </style>
