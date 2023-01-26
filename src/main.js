@@ -5,6 +5,11 @@ import axios from "axios";
 import router from "./routrer";
 import Cookies from "js-cookie";
 import VModal from 'vue-js-modal'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
+
+
+
 
 
 

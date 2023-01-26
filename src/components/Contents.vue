@@ -1,26 +1,27 @@
 <template>
   <div id="contentBox">
-    <div class="item" v-for="item in items" :key="item.shop_id">
+    <div class="item" v-for="item in items" :key="item.shop_id" @click="showModal = true">
       <h1>{{ item.name }}</h1>
-      <img v-bind:src="'http://127.0.0.1:3007/api/pic/'+item.logo" alt=""/>
+      <img v-bind:src="'http://127.0.0.1:3007/api/pic/' + item.logo" alt="" />
     </div>
   </div>
 </template>
 
 <script>
+import detail from './detail.vue';
 export default {
   data() {
     return {
-
-    };
-  },
-  
-  props:{
-    items:{
-      default:[]
+      showModal: false
     }
   },
-  mounted(){
+
+  props: {
+    items: {
+      default: []
+    }
+  },
+  mounted() {
     console.log(this.items)
   },
 
@@ -28,7 +29,19 @@ export default {
     goto(where) {
       this.$router.replace(where);
     },
+
+    // showModal(item) {
+    //   console.log("showModal method is called")
+    //   this.show = true
+    //   console.log("show variable value", this.show)
+    //   this.selectedItem = item
+    // }
   },
+
+  components: {
+    detail
+
+  }
 };
 </script>
 
@@ -41,6 +54,7 @@ export default {
   align-content: flex-start;
   justify-content: left;
 }
+
 .item {
   width: 350px;
   height: 250px;
@@ -49,7 +63,7 @@ export default {
   border-radius: 10px;
 }
 
-img{
+img {
   width: 200px;
 }
 </style>
