@@ -3,6 +3,7 @@
   <div>
     <top />
     <navbar />
+    <Dialog />
     <Recommend :items="items" :type="0"/>
     <Recommend :items="items2" :type="1"/>
 
@@ -20,6 +21,8 @@
 import top from "../components/Head_pic.vue";
 import navbar from "../components/navbar.vue";
 import Recommend from "../components/Recommend.vue";
+import Dialog from "@/components/Dialog.vue";
+
 
 
 export default {
@@ -55,7 +58,8 @@ export default {
   components:{
     top,
     navbar,
-    Recommend
+    Recommend,
+    Dialog
   }
 };
 </script>

@@ -1,15 +1,15 @@
 <template>
   <div id="contentBox">
-    <div class="item" v-for="item in items" :key="item.shop_id" @click="openModal">
+    <div class="item" v-for="item in items" :key="item.shop_id" @click="dialogVisible = true">
       <h1>{{ item.name }}</h1>
       <img v-bind:src="'http://127.0.0.1:3007/api/pic/' + item.logo" alt="" />
-      <as-modal/>
+      <Dialog />
     </div>
   </div>
 </template>
 
 <script>
- import asModal from './Modal.vue'
+import Dialog from './Dialog.vue';
 export default {
   data() {
     return {
@@ -39,7 +39,7 @@ export default {
   },
 
   components: {
-    asModal
+    Dialog
   }
 };
 </script>

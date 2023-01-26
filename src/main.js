@@ -7,14 +7,15 @@ import Cookies from "js-cookie";
 import VModal from 'vue-js-modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
-
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 
 
 
 
 Vue.config.productionTip = false;
-
+Vue.use(ElementUI)
 Vue.use(VueRouter);
 Vue.prototype.$axios = axios;
 
