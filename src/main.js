@@ -14,10 +14,14 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 
 
 Vue.config.productionTip = false;
-Vue.use(VModal)
+
 Vue.use(VueRouter);
 Vue.prototype.$axios = axios;
 
+Vue.use(VModal, {
+  dialog: true,
+  dynamic: true
+})
 new Vue({
   render: (h) => h(App),
   router: router,

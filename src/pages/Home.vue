@@ -3,7 +3,8 @@
   <div>
     <top />
     <navbar />
-    <Recommend :items="items"/>
+    <Recommend :items="items" :type="0"/>
+    <Recommend :items="items2" :type="1"/>
 
 
     <div>Here is foodcat restaurant review website</div>
@@ -24,15 +25,23 @@ import Recommend from "../components/Recommend.vue";
 export default {
   data() {
     return {
-      items:[]
+      items:[],
+      items2:[],
+      type:'',
     };
   },
 
   mounted(){
-    this.$axios.get("http://127.0.0.1:3007/api/random/1")
+    this.$axios.get("http://127.0.0.1:3007/api/random/0")
     .then(res => {
       console.log(res.data)
       this.items = res.data.data
+    }),
+
+    this.$axios.get("http://127.0.0.1:3007/api/random/1")
+    .then(res => {
+      console.log(res.data)
+      this.items2 = res.data.data
     })
 
   },

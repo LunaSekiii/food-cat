@@ -1,18 +1,19 @@
 <template>
   <div id="contentBox">
-    <div class="item" v-for="item in items" :key="item.shop_id" @click="showModal = true">
+    <div class="item" v-for="item in items" :key="item.shop_id" @click="openModal">
       <h1>{{ item.name }}</h1>
       <img v-bind:src="'http://127.0.0.1:3007/api/pic/' + item.logo" alt="" />
+      <as-modal/>
     </div>
   </div>
 </template>
 
 <script>
-import detail from './detail.vue';
+ import asModal from './Modal.vue'
 export default {
   data() {
     return {
-      showModal: false
+      show: true,
     }
   },
 
@@ -29,18 +30,16 @@ export default {
     goto(where) {
       this.$router.replace(where);
     },
+    openModal () {
+        this.$modal.show('as-modal')
+      }
 
-    // showModal(item) {
-    //   console.log("showModal method is called")
-    //   this.show = true
-    //   console.log("show variable value", this.show)
-    //   this.selectedItem = item
-    // }
+
+
   },
 
   components: {
-    detail
-
+    asModal
   }
 };
 </script>
