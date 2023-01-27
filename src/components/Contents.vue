@@ -1,9 +1,9 @@
 <template>
   <div id="contentBox">
-    <div class="item" v-for="item in items" :key="item.shop_id" @click="dialogVisible = true">
+    <div class="item" v-for="item in items" :key="item.shop_id" >
       <h1>{{ item.name }}</h1>
-      <img v-bind:src="'http://127.0.0.1:3007/api/pic/' + item.logo" alt="" />
-      <Dialog />
+  
+      <Dialog :item="item"/>
     </div>
   </div>
 </template>
