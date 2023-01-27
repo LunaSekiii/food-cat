@@ -10,10 +10,12 @@ export default new VueRouter({
     {
       path: "/",
       redirect: "/home",
+     
     },
     {
       path: "/home",
       component: Home,
+     
     },
     {
       path: "/login",
@@ -21,14 +23,12 @@ export default new VueRouter({
     },
     {
       path: "/restaurant",
-      meta:{
-        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
-      },
+     
       component: Restaurant,
     },
     {
       path: "/drinks",
-      component: Drinks,
+      
     },
   ],
 });

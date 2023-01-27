@@ -34,7 +34,7 @@ axios.interceptors.request.use(
   config => {
     const token = Cookies.get("token");
     if (token) {
-      config.headers.Authorization = "JWT " + token;
+      config.headers.Authorization =token;
     }
     return config;
   },

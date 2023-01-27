@@ -19,24 +19,8 @@ export default {
     props: ['items', 'type'],
 
     methods: {
-        // setType(type) {
-        //     console.log(type)
-        //     switch (type) {
-        //         case '0':
-        //             this.type_str = 'Restaurant';
-        //             break;
-        //         case '1':
-        //             this.type_str = 'Drink';
-        //             break;
-        //         default:
-        //             this.type_str = 'Restaurant';
-        //     }
-        // }
-    },
 
-    // created() {
-    //     this.setType(this.type);
-    // },
+    },
 
     components: {
         Contents

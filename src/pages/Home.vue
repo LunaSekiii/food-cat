@@ -3,7 +3,6 @@
   <div>
     <top />
     <navbar />
-    <Dialog />
     <Recommend :items="items" :type="0"/>
     <Recommend :items="items2" :type="1"/>
 
