@@ -2,11 +2,11 @@
   <div id="contentBox">
     <div class="item" v-for="item in items" :key="item.shop_id" @click="openDialog(item)">
 
-      <h1>{{ item.name }}</h1>
       <img v-bind:src="'http://127.0.0.1:3007/api/pic/' + item.logo" alt="" />
+      <div id="shopname">{{ item.name }}</div>
       <!-- <Dialog /> -->
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="90%">
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="80%">
 
 
       <div class="modal-body">
@@ -51,11 +51,11 @@
           <div class="addReview">
 
             <div class="userinfo">
-              <img src="../assets/img/default.png" alt="">
-              <div id="username">{{ currentItem.username }}</div>
+              <div class="pro_pic"><img src="../assets/img/default.png" alt="" id="pro_pic"></div>
+              <div id="username">{{ user.username }}</div>
             </div>
 
-            <div class="review">
+            <div class="myreview">
               <div id="text">
                 <div>
                   <el-rate v-model="value" :colors="colors"></el-rate>
@@ -69,10 +69,22 @@
           </div>
 
           <div class="shopReview">
-            <div v-for="review in reviews" :key="review._id">
-              <p>{{ review.user_id }}</p>
-              <p>{{ review.stars }}</p>
+            <div v-for="review in reviews" :key="review._id" class="review">
+              <p>{{ review.username }}</p>
+              <p>{{ review.date }}</p>
+              <div><el-rate v-model="review.stars" disabled show-score text-color="#ff9900" style="margin-left:auto">{{
+                review.stars
+              }}</el-rate></div>
               <p>{{ review.text }}</p>
+              <button v-if="userid === review.user_user_id" @click="deleteReview(review)">delete</button>
+              <el-popover v-if="userid === review.user_user_id" placement="right" width="400" trigger="click">
+                <div><el-rate v-model="new_value" :colors="colors"></el-rate></div>
+                <div><input type="text" v-model="reviewText" :placeholder="review.text"></div>
+                <el-button @click="updateReview(review)">update</el-button>
+                <el-button slot="reference">click 激活</el-button>
+              </el-popover>
+
+
             </div>
           </div>
 
@@ -106,7 +118,13 @@ export default {
       avg_rate: 0,
       shop_id: 0,
       review: '',
-      reviews:[]
+      reviews: [],
+      visible: false,
+      reviewText: '',
+      new_value: 0,
+      userid: 0,
+      user: []
+
 
     };
   },
@@ -124,6 +142,7 @@ export default {
 
   },
 
+
   watch: {
     value(star) {
       console.log(`current rate: ${star}`)
@@ -139,7 +158,8 @@ export default {
       this.currentItem = item;
       this.dialogVisible = true;
       this.avg_rate = item.average_rate;
-      this.showReview()
+      this.showReview();
+      this.getUserId()
     },
 
     addReview() {
@@ -151,6 +171,7 @@ export default {
             alert("Add review successfully")
             this.value = 0
             this.text = ''
+            this.showReview()
           } else {
             alert("Add fail, try again later")
           }
@@ -161,12 +182,48 @@ export default {
         })
     },
 
+    getUserId() {
+      this.$axios.get("http://127.0.0.1:3007/my/userinfo")
+        .then(res => {
+          this.userid = res.data.data.user_id
+          this.user = res.data.data
+          console.log(this.userid)
+        })
+    },
+
     showReview() {
       this.$axios.get("http://127.0.0.1:3007/review/show/" + this.currentItem.shop_id)
         .then(res => {
           console.log(res.data)
           this.reviews = res.data.data
 
+        })
+        .catch(err => {
+          console.log(err)
+          console.log("请求错误")
+        })
+    },
+    deleteReview(review) {
+      this.$axios.delete("http://127.0.0.1:3007/review/delete/" + review.review_id)
+      this.showReview()
+      console.log(review.review_id)
+    },
+    updateReview(review) {
+      if (this.reviewText === '') {
+        this.reviewText = 'This cat only gave rating without any comments...'
+      }
+      this.$axios.post("http://127.0.0.1:3007/review/update/" + review.review_id,
+        QueryString.stringify({ text: this.reviewText, stars: this.new_value, shop_shop_id: this.currentItem.shop_id }))
+        .then(res => {
+          if (res.data.status === 0) {
+            console.log(res)
+            alert("Update review successfully")
+            this.reviewText = ''
+            this.showReview()
+
+          } else {
+            alert("Update fail, try again later")
+          }
         })
         .catch(err => {
           console.log(err)
@@ -190,24 +247,46 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  justify-content: left;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+}
+
+#shopname {
+  margin: 20px;
+  font-size: 30px;
 }
 
 .item {
-  width: 350px;
-  height: 250px;
-  margin: 10px;
-  background-color: #ffe6cf;
-  border-radius: 10px;
+  width: 300px;
+  height: 280px;
+  margin: 40px;
+  background-color: #FFF5E9;
+  border-radius: 30px;
+  text-align: center;
 }
 
-.item:hover {
+/* .item:hover {
   background-color: rgb(146, 123, 101);
   transition: all 0.5s;
+} */
+
+.item img {
+  margin-top: 20px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: .3s;
 }
 
-img {
-  width: 200px;
+.item img:hover {
+  border-radius: 30px;
+  width: 150px;
+  height: 150px;
+
+
 }
 
 
@@ -293,7 +372,7 @@ img {
 
 .addReview {
   width: 80%;
-  height: 200px;
+  height: 240px;
   background-color: #fff;
   border-radius: 30px;
   margin: 0 auto;
@@ -301,26 +380,78 @@ img {
   overflow: hidden;
 }
 
+
+
+#pro_pic {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}
+
+#username {
+  width: 100%;
+  font-size: 26px;
+  text-align: center;
+  margin: auto;
+}
+
+/* review */
+.myreview {
+  width: 80%;
+  height: 100%;
+  border-radius: 30px;
+  margin: 0 auto;
+  padding: 5px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#text {
+  width: 90%;
+  height: 80%;
+  margin: auto;
+  border: 1px solid #A56221;
+  border-radius: 30px;
+}
+
 .userinfo {
   position: relative;
   width: 20%;
   height: 100%;
-  background-color: darkseagreen;
   float: left;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
-.userinfo img {
-  position: relative;
-  margin-top: 30%;
-  width: 50%;
-  border-radius: 50%;
-  border: 1px solid #A56221;
-  /* left: 50%;
-  transform: translateX(-50%); */
+.review{
+
 }
 
-#username {
-  font-size: 20px;
-  text-align: center;
+.review-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.review-username {
+  /* add any additional styling for the username here */
+}
+
+.review-date {
+  /* add any additional styling for the date here */
+  display: inline;
+}
+
+.review-stars {
+  /* add any additional styling for the stars here */
+}
+
+.review-text {
+  /* add any additional styling for the text here */
 }
 </style>
