@@ -3,16 +3,17 @@
   <div>
     <top />
     <navbar />
-    <Recommend :items="items" :type="0"/>
-    <Recommend :items="items2" :type="1"/>
+    <Recommend :items="items" :type_num="0"/>
+    <Recommend :items="items2" :type_num="1"/>
+    <div id="about"><img src="../assets/img/组 184.png" alt=""></div>
 
-
+<!-- 
     <div>Here is foodcat restaurant review website</div>
     <button @click="goto('login')">login click here!</button>
     <button @click="goto('restaurant')">restaurant review click here!</button>
-    <button @click="goto('drinks')">drink review click here!</button>
+    <button @click="goto('drinks')">drink review click here!</button> -->
 
-    <div id="zhanweizhide">    </div>
+    <!-- <div id="zhanweizhide">    </div> -->
   </div>
 </template>
 
@@ -20,7 +21,7 @@
 import top from "../components/Head_pic.vue";
 import navbar from "../components/navbar.vue";
 import Recommend from "../components/Recommend.vue";
-import Dialog from "@/components/Dialog.vue";
+
 
 
 
@@ -29,7 +30,7 @@ export default {
     return {
       items:[],
       items2:[],
-      type:'',
+      type_num:'',
     };
   },
 
@@ -58,13 +59,17 @@ export default {
     top,
     navbar,
     Recommend,
-    Dialog
+
+
   }
 };
 </script>
 
 <style>
-#zhanweizhide{
-  height: 2000px;
+#about{
+  width: 100%;
+}
+#about img{
+  width: 100%;
 }
 </style>

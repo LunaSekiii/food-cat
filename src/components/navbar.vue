@@ -1,71 +1,103 @@
 <template>
-    <div id="navbar">
+    
 
-        <ul class="shell">
 
-            <li class="nav_button">
-                <span>logo</span>
-            </li>
+        <div id="navbar">
 
-            <li class="empty_space">
-                <span></span>
-            </li>
+            <ul class="shell">
 
-            <li class="empty_space">
-                <span></span>
-            </li>
+                <li class="nav_button" @click="goto('home')">
+                    <span><img src="../assets/img/组 183.png" alt="" class="catlogo"></span>
+                </li>
 
-            <li class="nav_button">
-                <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/cottage--v1.png" /></div>
-                <div class="size_set">restaurant</div>
-                <ul class="detail">
-                    <li><img src="https://img.icons8.com/doodle/48/null/noodles--v1.png" />view by category</li>
-                    <li><img src="https://img.icons8.com/doodle/48/null/fire-element--v1.png" />hot restaurants</li>
-                </ul>
-            </li>
+                <li class="empty_space">
+                    <span></span>
+                </li>
 
-            <li class="nav_button">
-                <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/lemonade.png" /></div>
-                <div class="size_set">drink</div>
-                <ul class="detail">
-                    <li><img src="https://img.icons8.com/doodle/48/null/cafe--v1.png" />view by category</li>
-                    <li><img src="https://img.icons8.com/doodle/48/null/fire-element--v1.png" />hot drinks</li>
-                </ul>
-            </li>
+                <li class="empty_space">
+                    <span></span>
+                </li>
 
-            <li class="nav_button">
-                <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/likes-folder.png" /></div>
-                <div class="size_set">favorite</div>
-                <ul class="detail">
-                    <li>view by category</li>
-                    <li>hot restaurant</li>
-                </ul>
-            </li>
+                <li class="nav_button" @click="goto('restaurant')">
+                    <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/cottage--v1.png" /></div>
+                    <div class="size_set">restaurant</div>
+                    <ul class="detail">
+                        <li><img src="https://img.icons8.com/doodle/48/null/noodles--v1.png" />view by category</li>
+                        <li><img src="https://img.icons8.com/doodle/48/null/fire-element--v1.png" />hot restaurants</li>
+                    </ul>
+                </li>
 
-            <li class="empty_space" id="empty_space">
-                <span></span>
-            </li>
+                <li class="nav_button" @click="goto('drinks')">
+                    <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/lemonade.png" /></div>
+                    <div class="size_set">drink</div>
+                    <ul class="detail">
+                        <li><img src="https://img.icons8.com/doodle/48/null/cafe--v1.png" />view by category</li>
+                        <li><img src="https://img.icons8.com/doodle/48/null/fire-element--v1.png" />hot drinks</li>
+                    </ul>
+                </li>
 
-            <li class="nav_button">
-                <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/name.png" /></div>
-                <div class="size_set">favorite</div>
-                <ul class="information detail">
-                    <li>profile picture</li>
-                    <li>username</li>
-                    <li>review count</li>
-                    <li>log out</li>
-                </ul>
-            </li>
-        </ul>
+                <li class="nav_button">
+                    <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/likes-folder.png" /></div>
+                    <div class="size_set">favorite</div>
+                    <!-- <ul class="detail">
+                        <li>view by category</li>
+                        <li>hot restaurant</li>
+                    </ul> -->
+                </li>
 
-    </div>
+                <li class="empty_space" id="empty_space">
+                    <span></span>
+                </li>
+
+
+                <li class="nav_button">
+                    <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/name.png" /></div>
+                    <div class="size_set">me</div>
+                    <!-- <ul class="information detail">
+                        <li>profile picture</li>
+                        <li>username</li>
+                        <li>review count</li>
+                        <li>log out</li>
+                    </ul> -->
+                </li>
+
+
+            </ul>
+
+
+
+        </div>
+   
 </template>
 
 <script>
-export default{}
+export default {
+    data() {
+        return{
+
+        }
+
+    },
+    methods: {
+        goto(where) {
+            this.$router.push(where);
+        },
+        checkLogin(){
+            let token =  Cookies.get("token");
+            if(token){
+                
+            }
+        }
+    }
+}
 </script>
 
-<style>
+<style scoped>
+* {
+    margin: 0;
+    padding: 0;
+}
+
 #navbar {
     width: 100%;
     height: 70px;
@@ -151,4 +183,10 @@ export default{}
 .detail li img {
     width: 1px;
 }
+
+.catlogo{
+    width: 100px;
+    transform: scale(6,6)
+}
+
 </style>

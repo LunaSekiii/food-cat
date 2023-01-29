@@ -1,53 +1,58 @@
 <template>
-  <div class="centerBox">
-    <!-- 最外层的大盒子 -->
-    <div class="box">
-      <!-- 滑动盒子 -->
-      <div class="pre-box" :style="preBoxStyle">
-        <h1>WELCOME</h1>
-        <p>JOIN US!</p>
-        <!-- <div class="img-box">
+  <div class="bigbox">
+    <el-popover placement="top-start" width="224" trigger="hover" content="Click on me and I can take you back to the homepage"  >
+      <img src="../assets/img/VCG211363988914.png" alt="" id="cat" slot="reference" @click="goto('home')">
+    </el-popover>
+    <div class="centerBox">
+      <!-- 最外层的大盒子 -->
+      <div class="box">
+        <!-- 滑动盒子 -->
+        <div class="pre-box" :style="preBoxStyle">
+          <h1>WELCOME</h1>
+          <p>JOIN US!</p>
+          <!-- <div class="img-box">
                 <img src="./img/waoku.jpg" alt="">
             </div> -->
-      </div>
+        </div>
 
-      <!-- 注册盒子 -->
-      <div class="register-form">
-        <!-- 标题盒子 -->
-        <div class="title-box">
-          <h1>Sign up</h1>
+        <!-- 注册盒子 -->
+        <div class="register-form">
+          <!-- 标题盒子 -->
+          <div class="title-box">
+            <h1>Sign up</h1>
+          </div>
+          <!-- 输入框盒子 -->
+          <div class="input-box">
+            <input type="text" placeholder="username" v-model="username" />
+            <input type="text" placeholder="email" v-model="email" />
+            <input type="password" placeholder="password" v-model="password" />
+            <input type="password" placeholder="enter again your password" v-model="password2" />
+          </div>
+          <!-- 按钮盒子 -->
+          <div class="btn-box">
+            <button @click="register">OK!</button>
+            <!-- 绑定点击事件 -->
+            <p @click="mySwitch()">Have account? Login HERE!</p>
+          </div>
         </div>
-        <!-- 输入框盒子 -->
-        <div class="input-box">
-          <input type="text" placeholder="username" v-model="username"/>
-          <input type="text" placeholder="email" v-model="email"/>
-          <input type="password" placeholder="password"  v-model="password"/>
-          <input type="password" placeholder="enter again your password"  v-model="password2"/>
-        </div>
-        <!-- 按钮盒子 -->
-        <div class="btn-box">
-          <button @click="register">OK!</button>
-          <!-- 绑定点击事件 -->
-          <p @click="mySwitch()">Have account? Login HERE!</p>
-        </div>
-      </div>
-      
-      <!-- 登录盒子 -->
-      <div class="login-form">
-        <!-- 标题盒子 -->
-        <div class="title-box">
-          <h1>Login</h1>
-        </div>
-        <!-- 输入框盒子 -->
-        <div class="input-box">
-          <input type="text" placeholder="email" v-model="email"/>
-          <input type="password" placeholder="password" v-model="password"/>
-        </div>
-        <!-- 按钮盒子 -->
-        <div class="btn-box"  >
-          <button @click="login">OK!</button>
-          <!-- 绑定点击事件 -->
-          <p @click="mySwitch()">No account? Sign up</p>
+
+        <!-- 登录盒子 -->
+        <div class="login-form">
+          <!-- 标题盒子 -->
+          <div class="title-box">
+            <h1>Login</h1>
+          </div>
+          <!-- 输入框盒子 -->
+          <div class="input-box">
+            <input type="text" placeholder="email" v-model="email1" />
+            <input type="password" placeholder="password" v-model="password1" />
+          </div>
+          <!-- 按钮盒子 -->
+          <div class="btn-box">
+            <button @click="login">OK!</button>
+            <!-- 绑定点击事件 -->
+            <p @click="mySwitch()">No account? Sign up</p>
+          </div>
         </div>
       </div>
     </div>
@@ -70,7 +75,7 @@ const mySwitch = () => {
 import QueryString from 'qs';
 import Cookies from "js-cookie";
 export default {
-  
+
   data() {
     return {
       isLogin: true,
@@ -78,6 +83,8 @@ export default {
       password: '',
       password2: '',
       email: '',
+      email1: '',
+      password1: '',
 
 
     };
@@ -87,42 +94,55 @@ export default {
     mySwitch() {
       this.isLogin = !this.isLogin;
     },
+    goto(where) {
+      this.$router.push(where);
+    },
 
-    register(){
-      this.$axios.post("http://127.0.0.1:3007/api/reguser", QueryString.stringify({username: this.username,
-      email:this.email,
-      password:this.password,
-      password2: this.password2
-      },{headers : {"content-type": "application/x-www-form-urlencoded"}}).then(res => {
+    register() {
+      this.$axios.post("http://127.0.0.1:3007/api/reguser", QueryString.stringify({
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        password2: this.password2
+      }, { headers: { "content-type": "application/x-www-form-urlencoded" } }).then(res => {
         console.log(res);
       }))
     },
 
-    login(){
-      this.$axios.post("http://127.0.0.1:3007/api/login", 
-      QueryString.stringify({email:this.email,password:this.password,}))
-      .then(res => {
-        if(res.data.status === 0 ){
-          console.log(res)
-          // window.localStorage.setItem('token', res.data.token)
-          // window.localStorage.setItem('username', res.data.username)
-          // Cookies.set("token", res.data.token); 
-          Cookies.set("token", res.data.token, { expires: 7 });
-          console.log(Cookies.get("token"))
-          alert("login successfully")
-          this.$router.push('/home')
-        }else{
-          alert("Login fail, try again later")
-        }
-      })
-      .catch(err => {
-        console.log(err)
-        console.log("请求错误")
-      })
+    login() {
+      this.$axios.post("http://127.0.0.1:3007/api/login",
+        QueryString.stringify({ email: this.email1, password: this.password1, }))
+        .then(res => {
+          if (res.data.status === 0) {
+            console.log(res)
+            // window.localStorage.setItem('token', res.data.token)
+            // window.localStorage.setItem('username', res.data.username)
+            // Cookies.set("token", res.data.token); 
+            Cookies.set("token", res.data.token, { expires: 7 });
+            console.log(Cookies.get("token"))
+            alert("login successfully")
+            this.$router.push('/home')
+          } else {
+            alert("Login fail, try again later")
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          console.log("请求错误")
+        })
 
     },
 
 
+  },
+  //创建前设置
+  beforeCreate() {
+    
+    document.querySelector('body').setAttribute('style', 'background-color: #FFFDED;')
+  },
+  // 销毁前清除（非必须,不清除的话完全可以,这块只不过告诉您可以这么玩）
+  beforeDestroy () {
+      document.querySelector('body').removeAttribute('style')
   },
 
   computed: {
@@ -138,6 +158,19 @@ export default {
 </script>
 
 <style scoped>
+.bigbox {
+  position: relative;
+  overflow: hidden;
+}
+
+#cat {
+  position: absolute;
+  z-index: 999;
+  width: 400px;
+  left: 40%;
+  bottom: -60px;
+}
+
 /* 去除input的轮廓 */
 input {
   outline: none;
@@ -173,18 +206,26 @@ input {
 }
 
 .register-form .title-box {
+  position: relative;
   height: 200px;
   line-height: 300px;
 }
 
 .login-form .title-box {
+  position: relative;
   height: 250px;
   line-height: 400px;
 }
 
 .title-box h1 {
+  position: absolute;
   text-align: center;
   letter-spacing: 5px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* 50%为自身尺寸的一半 */
 }
 
 .input-box {

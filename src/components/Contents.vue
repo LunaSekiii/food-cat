@@ -58,30 +58,32 @@
             <div class="myreview">
               <div id="text">
                 <div>
-                  <el-rate v-model="value" :colors="colors"></el-rate>
+                  <el-rate v-model="value" :colors="colors" class="star"></el-rate>
+                  <input type="text" placeholder="write your comment here" v-model="text" class="text">
+                  <div id="submit"> <img src="../assets/img/send.png" alt="" @click="addReview"></div>
                 </div>
 
-                <input type="text" placeholder="write your comment here" v-model="text">
 
-                <img src="../assets/img/send.png" alt="" id="submit" @click="addReview">
+
               </div>
             </div>
           </div>
 
           <div class="shopReview">
             <div v-for="review in reviews" :key="review._id" class="review">
-              <p>{{ review.username }}</p>
-              <p>{{ review.date }}</p>
-              <div><el-rate v-model="review.stars" disabled show-score text-color="#ff9900" style="margin-left:auto">{{
-                review.stars
-              }}</el-rate></div>
-              <p>{{ review.text }}</p>
-              <button v-if="userid === review.user_user_id" @click="deleteReview(review)">delete</button>
-              <el-popover v-if="userid === review.user_user_id" placement="right" width="400" trigger="click">
+              <p id="review_username">{{ review.username }}</p>
+              <div id="review_star"><el-rate v-model="review.stars" disabled text-color="#ff9900"
+                  style="margin-left:auto"></el-rate></div>
+              <p id="review_text">{{ review.text }}</p>
+              <p id="review_date">{{ review.date }}</p>
+              <div class="delete-update-container"></div>
+              <span v-if="userid === review.user_user_id" @click="deleteReview(review)" id="delete"><img
+                  src="../assets/img/icons8-empty-trash-96.png" alt=""></span>
+              <el-popover v-if="userid === review.user_user_id" placement="button" width="600" trigger="click">
                 <div><el-rate v-model="new_value" :colors="colors"></el-rate></div>
                 <div><input type="text" v-model="reviewText" :placeholder="review.text"></div>
                 <el-button @click="updateReview(review)">update</el-button>
-                <el-button slot="reference">click 激活</el-button>
+                <span slot="reference" id="update"><img src="../assets/img/icons8-多重编辑-96.png" alt=""></span>
               </el-popover>
 
 
@@ -163,23 +165,28 @@ export default {
     },
 
     addReview() {
-      this.$axios.post("http://127.0.0.1:3007/review/add",
-        QueryString.stringify({ text: this.text, stars: this.value, shop_shop_id: this.currentItem.shop_id }))
-        .then(res => {
-          if (res.data.status === 0) {
-            console.log(res)
-            alert("Add review successfully")
-            this.value = 0
-            this.text = ''
-            this.showReview()
-          } else {
-            alert("Add fail, try again later")
-          }
-        })
-        .catch(err => {
-          console.log(err)
-          console.log("请求错误")
-        })
+      if (this.value != '') {
+        this.$axios.post("http://127.0.0.1:3007/review/add",
+          QueryString.stringify({ text: this.text, stars: this.value, shop_shop_id: this.currentItem.shop_id }))
+          .then(res => {
+            if (res.data.status === 0) {
+              console.log(res)
+              alert("Add review successfully")
+              this.value = 0
+              this.text = ''
+              this.showReview()
+            } else {
+              alert("Add fail, try again later")
+            }
+          })
+          .catch(err => {
+            console.log(err)
+            console.log("请求错误")
+          })
+      }else{
+        alert("please give the rate")
+      }
+
     },
 
     getUserId() {
@@ -240,7 +247,7 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 #contentBox {
   width: 100%;
   height: 60vh;
@@ -267,10 +274,7 @@ export default {
   text-align: center;
 }
 
-/* .item:hover {
-  background-color: rgb(146, 123, 101);
-  transition: all 0.5s;
-} */
+
 
 .item img {
   margin-top: 20px;
@@ -378,14 +382,28 @@ export default {
   margin: 0 auto;
   margin-top: 20px;
   overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
-
+.userinfo {
+  position: relative;
+  width: 20%;
+  height: 100%;
+  float: left;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
 
 #pro_pic {
   width: 100px;
   height: 100px;
   margin: auto;
+  border-radius: 50%;
+  border: 1px solid #A56221;
 }
 
 #username {
@@ -408,50 +426,60 @@ export default {
   align-items: flex-start;
 }
 
+.myreview .star {
+  margin-top: 20px;
+  margin-left: 15px;
+  float: left;
+}
+
+.myreview .text {
+  margin-top: 2px;
+  margin-left: 5px;
+  width: 90%;
+  height: 50%;
+  border-style: none;
+  outline: none;
+}
+
+#submit {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+
 #text {
   width: 90%;
   height: 80%;
   margin: auto;
   border: 1px solid #A56221;
   border-radius: 30px;
-}
-
-.userinfo {
   position: relative;
-  width: 20%;
-  height: 100%;
-  float: left;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
 }
 
-.review{
+
+
+.review {
+  margin: 0 auto;
+  margin-top: 10px;
+  border-bottom: 1px solid #A56221;
+  width: 80%;
 
 }
 
-.review-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+#review_username {
+  font-size: 25px;
+
 }
 
-.review-username {
-  /* add any additional styling for the username here */
+#review_star {}
+
+#delete img {
+  width: 50px;
 }
 
-.review-date {
-  /* add any additional styling for the date here */
-  display: inline;
-}
-
-.review-stars {
-  /* add any additional styling for the stars here */
-}
-
-.review-text {
-  /* add any additional styling for the text here */
+#update img {
+  width: 50px;
 }
 </style>
+

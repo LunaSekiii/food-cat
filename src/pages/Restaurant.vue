@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header />
+    <navbar />
     <SearchBar type="resturant" />
     Restaurant
     <Contents v-bind:items="items"/>
@@ -8,9 +8,10 @@
 </template>
 
 <script>
-import Header from "../components/Header";
+
 import SearchBar from "../components/SearchBar";
 import Contents from "../components/Contents";
+import navbar from "../components/navbar.vue";
 export default {
   data() {
     return {
@@ -26,7 +27,7 @@ export default {
 
   },
   components: {
-    Header,
+    navbar,
     SearchBar,
     Contents,
   },
