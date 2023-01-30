@@ -6,7 +6,7 @@
       <div id="shopname">{{ item.name }}</div>
       <!-- <Dialog /> -->
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="80%">
+    <el-dialog title="Details" :visible.sync="dialogVisible" width="70%">
 
 
       <div class="modal-body">
@@ -76,15 +76,26 @@
                   style="margin-left:auto"></el-rate></div>
               <p id="review_text">{{ review.text }}</p>
               <p id="review_date">{{ review.date }}</p>
-              <div class="delete-update-container"></div>
-              <span v-if="userid === review.user_user_id" @click="deleteReview(review)" id="delete"><img
-                  src="../assets/img/icons8-empty-trash-96.png" alt=""></span>
-              <el-popover v-if="userid === review.user_user_id" placement="button" width="600" trigger="click">
-                <div><el-rate v-model="new_value" :colors="colors"></el-rate></div>
-                <div><input type="text" v-model="reviewText" :placeholder="review.text"></div>
-                <el-button @click="updateReview(review)">update</el-button>
-                <span slot="reference" id="update"><img src="../assets/img/icons8-多重编辑-96.png" alt=""></span>
-              </el-popover>
+              <div class="delete-update-container">
+                <span v-if="userid === review.user_user_id" id="delete">
+
+                  <el-popover placement="top" width="353" v-model="visible">
+                    <p>Are you sure you wanna delete your comment... that's valuable to us TvT</p>
+                    <div style="text-align: right; margin: 0">
+                      <el-button size="mini" type="text" @click="visible = false">No</el-button>
+                      <el-button type="primary" size="mini" @click="deleteReview(review)">Yes</el-button>
+                    </div>
+                    <img src="../assets/img/icons8-empty-trash-96.png" alt="" slot="reference">
+                  </el-popover>
+
+                </span>
+                <el-popover v-if="userid === review.user_user_id" placement="button" width="600" trigger="click">
+                  <div><el-rate v-model="new_value" :colors="colors"></el-rate></div>
+                  <div><input type="text" v-model="reviewText" :placeholder="review.text"></div>
+                  <el-button @click="updateReview(review)">update</el-button>
+                  <span slot="reference" id="update"><img src="../assets/img/icons8-多重编辑-96.png" alt=""></span>
+                </el-popover>
+              </div>
 
 
             </div>
@@ -97,8 +108,8 @@
 
 
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+
+        <el-button type="primary" @click="dialogVisible = false">close</el-button>
       </span>
     </el-dialog>
   </div>
@@ -125,7 +136,8 @@ export default {
       reviewText: '',
       new_value: 0,
       userid: 0,
-      user: []
+      user: [],
+      visible: false,
 
 
     };
@@ -183,7 +195,7 @@ export default {
             console.log(err)
             console.log("请求错误")
           })
-      }else{
+      } else {
         alert("please give the rate")
       }
 
@@ -212,8 +224,15 @@ export default {
     },
     deleteReview(review) {
       this.$axios.delete("http://127.0.0.1:3007/review/delete/" + review.review_id)
-      this.showReview()
-      console.log(review.review_id)
+        .then(response => {
+          // 回调函数
+          console.log(response);
+          this.visible = false;
+          this.showReview();
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     updateReview(review) {
       if (this.reviewText === '') {
@@ -248,6 +267,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+* {
+  color: #804C1A;
+}
+
 #contentBox {
   width: 100%;
   height: 60vh;
@@ -263,6 +286,7 @@ export default {
 #shopname {
   margin: 20px;
   font-size: 30px;
+  font-family: 'Trebuchet MS';
 }
 
 .item {
@@ -411,6 +435,7 @@ export default {
   font-size: 26px;
   text-align: center;
   margin: auto;
+  font-family: 'Trebuchet MS';
 }
 
 /* review */
@@ -439,6 +464,7 @@ export default {
   height: 50%;
   border-style: none;
   outline: none;
+
 }
 
 #submit {
@@ -455,31 +481,51 @@ export default {
   border: 1px solid #A56221;
   border-radius: 30px;
   position: relative;
-}
 
+}
+.delete-update-container{
+  position: absolute;
+  bottom: 0px;
+  right: 30px;
+}
 
 
 .review {
   margin: 0 auto;
   margin-top: 10px;
-  border-bottom: 1px solid #A56221;
+  border-bottom: 1px dashed #A56221;
   width: 80%;
 
 }
 
 #review_username {
-  font-size: 25px;
+  font-weight: 500;
+  font-size: 28px;
+  font-family: 'Trebuchet MS';
+  color: #7c4b1c;
+
 
 }
 
-#review_star {}
 
 #delete img {
   width: 50px;
 }
 
+#review_text {
+  font-size: 20px;
+  /* font-family: 'Segoe Print'; */
+
+  font-family: 'Segoe UI Variable Small';
+}
+
+#review_date {
+  color: #b36a22;
+}
+
 #update img {
   width: 50px;
 }
+
 </style>
 

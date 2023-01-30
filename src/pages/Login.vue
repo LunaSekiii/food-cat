@@ -166,7 +166,7 @@ export default {
 #cat {
   position: absolute;
   z-index: 999;
-  width: 400px;
+  width: 200px;
   left: 40%;
   bottom: -60px;
 }

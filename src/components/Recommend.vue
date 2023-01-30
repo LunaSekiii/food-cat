@@ -41,6 +41,7 @@ export default {
 .title {
     font-size: 40px;
     margin-top: 90px;
+    font-family: 'Tw Cen MT';
     
 }
 </style>

@@ -1,9 +1,10 @@
 <template>
   <div id="searchBar">
-    <h1>view by category</h1>
-    <input type="text" name="searchKey" id="searchInput" />
+    <!-- <h1>view by category</h1> -->
+    <h1>All Shops</h1>
+    <div><img src="../assets/img/icons8-search-192.png" alt=""><input type="text" name="searchKey" id="searchInput" /></div>
     <div>
-      <span>All</span>
+      <!-- <span>All</span> -->
     </div>
   </div>
 </template>
@@ -30,15 +31,29 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+*{
+  color: #804C1A;
+}
 .searchBar {
   width: 100vw;
-  height: 10vh;
+  height: 20vh;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: space-around;
   background-color: antiquewhite;
+  margin-top: 900px;
+}
+
+#searchInput{
+  width: 800px;
+  height: 60px;
+  border-radius: 100px;;
+  border: 1.5px solid #A56221;
+}
+img{
+  width: 55px;
 }
 nav {
   width: 20vw;

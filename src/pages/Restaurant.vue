@@ -1,8 +1,8 @@
 <template>
   <div>
     <navbar />
-    <SearchBar type="resturant" />
-    Restaurant
+    <SearchBar type="resturant" id="bar"/>
+    <!-- Restaurant -->
     <Contents v-bind:items="items"/>
   </div>
 </template>
@@ -35,3 +35,10 @@ export default {
   
 };
 </script>
+
+<style>
+#bar{
+  margin-top: 30px;
+}
+
+</style>

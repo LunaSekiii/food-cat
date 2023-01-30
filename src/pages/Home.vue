@@ -66,6 +66,9 @@ export default {
 </script>
 
 <style>
+*{
+  color: #804C1A;
+}
 #about{
   width: 100%;
 }
