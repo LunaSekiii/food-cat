@@ -117,8 +117,7 @@ export default {
             console.log(res)
             // window.localStorage.setItem('token', res.data.token)
             // window.localStorage.setItem('username', res.data.username)
-            // Cookies.set("token", res.data.token); 
-            Cookies.set("token", res.data.token, { expires: 7 });
+            Cookies.set("token", res.data.token, { expires: 1 });
             console.log(Cookies.get("token"))
             alert("login successfully")
             this.$router.push('/home')

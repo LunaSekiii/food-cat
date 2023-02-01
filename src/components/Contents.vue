@@ -1,12 +1,13 @@
 <template>
   <div id="contentBox">
     <div class="item" v-for="item in items" :key="item.shop_id" @click="openDialog(item)">
+      <img src="../assets/img/icons8-favorite-80 (1).png" alt="" id="like">
 
-      <img v-bind:src="'http://127.0.0.1:3007/api/pic/' + item.logo" alt="" />
+      <img v-bind:src="'http://127.0.0.1:3007/api/pic/' + item.logo" alt="" id="shopLogo"/>
       <div id="shopname">{{ item.name }}</div>
       <!-- <Dialog /> -->
     </div>
-    <el-dialog title="Details" :visible.sync="dialogVisible" width="70%">
+    <el-dialog title="Details" :visible.sync="dialogVisible" width="70%" :modal="false" >
 
 
       <div class="modal-body">
@@ -145,7 +146,8 @@ export default {
 
   props: {
     items: {
-      default: []
+      type: Array,
+      default: () => []
     }
   },
   mounted() {
@@ -271,6 +273,7 @@ export default {
   color: #804C1A;
 }
 
+
 #contentBox {
   width: 100%;
   height: 60vh;
@@ -280,7 +283,8 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-
+  
+  
 }
 
 #shopname {
@@ -296,11 +300,12 @@ export default {
   background-color: #FFF5E9;
   border-radius: 30px;
   text-align: center;
+  position: relative;
 }
 
 
 
-.item img {
+.item #shopLogo {
   margin-top: 20px;
   width: 150px;
   height: 150px;
@@ -309,7 +314,7 @@ export default {
   transition: .3s;
 }
 
-.item img:hover {
+.item #shopLogo:hover {
   border-radius: 30px;
   width: 150px;
   height: 150px;
@@ -330,6 +335,7 @@ export default {
   border-radius: 40px;
   box-shadow: 5px 5px #A56221;
   z-index: 999;
+  
 }
 
 .head {
@@ -483,7 +489,8 @@ export default {
   position: relative;
 
 }
-.delete-update-container{
+
+.delete-update-container {
   position: absolute;
   bottom: 0px;
   right: 30px;
@@ -525,6 +532,31 @@ export default {
 
 #update img {
   width: 50px;
+}
+
+/* like */
+#contentBox .item #like{
+  width: 50px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* .el-dialog__wrapper {
+  position: relative;
+  z-index: 9999999;
+  display: block;
+} */
+.el-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.el-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 </style>

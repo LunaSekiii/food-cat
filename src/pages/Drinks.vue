@@ -2,8 +2,10 @@
   <div>
     <navbar />
     <SearchBar type="drinks" id="bar"/>
+    <button @click="selectCate()"> 种类</button>
     <!-- Drinks -->
     <Contents v-bind:items="items"/>
+    
   </div>
 </template>
 
@@ -40,5 +42,7 @@ export default {
 #bar{
   margin-top: 30px;
 }
+
+
 </style>
 
