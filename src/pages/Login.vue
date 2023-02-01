@@ -1,7 +1,18 @@
 <template>
   <div class="bigbox">
-    <el-popover placement="top-start" width="224" trigger="hover" content="Click on me and I can take you back to the homepage"  >
-      <img src="../assets/img/VCG211363988914.png" alt="" id="cat" slot="reference" @click="goto('home')">
+    <el-popover
+      placement="top-start"
+      width="224"
+      trigger="hover"
+      content="Click on me and I can take you back to the homepage"
+    >
+      <img
+        src="../assets/img/VCG211363988914.png"
+        alt=""
+        id="cat"
+        slot="reference"
+        @click="goto('home')"
+      />
     </el-popover>
     <div class="centerBox">
       <!-- 最外层的大盒子 -->
@@ -26,7 +37,11 @@
             <input type="text" placeholder="username" v-model="username" />
             <input type="text" placeholder="email" v-model="email" />
             <input type="password" placeholder="password" v-model="password" />
-            <input type="password" placeholder="enter again your password" v-model="password2" />
+            <input
+              type="password"
+              placeholder="enter again your password"
+              v-model="password2"
+            />
           </div>
           <!-- 按钮盒子 -->
           <div class="btn-box">
@@ -72,21 +87,18 @@ const mySwitch = () => {
   flag = !flag;
 };
 
-import QueryString from 'qs';
+import QueryString from "qs";
 import Cookies from "js-cookie";
 export default {
-
   data() {
     return {
       isLogin: true,
-      username: '',
-      password: '',
-      password2: '',
-      email: '',
-      email1: '',
-      password1: '',
-
-
+      username: "",
+      password: "",
+      password2: "",
+      email: "",
+      email1: "",
+      password1: "",
     };
   },
 
@@ -99,49 +111,59 @@ export default {
     },
 
     register() {
-      this.$axios.post("http://127.0.0.1:3007/api/reguser", QueryString.stringify({
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        password2: this.password2
-      }, { headers: { "content-type": "application/x-www-form-urlencoded" } }).then(res => {
-        console.log(res);
-      }))
+      this.$axios.post(
+        "http://9enamv.natappfree.cc/api/reguser",
+        QueryString.stringify(
+          {
+            username: this.username,
+            email: this.email,
+            password: this.password,
+            password2: this.password2,
+          },
+          { headers: { "content-type": "application/x-www-form-urlencoded" } }
+        ).then((res) => {
+          console.log(res);
+        })
+      );
     },
 
     login() {
-      this.$axios.post("http://127.0.0.1:3007/api/login",
-        QueryString.stringify({ email: this.email1, password: this.password1, }))
-        .then(res => {
+      this.$axios
+        .post(
+          "http://9enamv.natappfree.cc/api/login",
+          QueryString.stringify({
+            email: this.email1,
+            password: this.password1,
+          })
+        )
+        .then((res) => {
           if (res.data.status === 0) {
-            console.log(res)
+            console.log(res);
             // window.localStorage.setItem('token', res.data.token)
             // window.localStorage.setItem('username', res.data.username)
             Cookies.set("token", res.data.token, { expires: 1 });
-            console.log(Cookies.get("token"))
-            alert("login successfully")
-            this.$router.push('/home')
+            console.log(Cookies.get("token"));
+            alert("login successfully");
+            this.$router.push("/home");
           } else {
-            alert("Login fail, try again later")
+            alert("Login fail, try again later");
           }
         })
-        .catch(err => {
-          console.log(err)
-          console.log("请求错误")
-        })
-
+        .catch((err) => {
+          console.log(err);
+          console.log("请求错误");
+        });
     },
-
-
   },
   //创建前设置
   beforeCreate() {
-    
-    document.querySelector('body').setAttribute('style', 'background-color: #FFFDED;')
+    document
+      .querySelector("body")
+      .setAttribute("style", "background-color: #FFFDED;");
   },
   // 销毁前清除（非必须,不清除的话完全可以,这块只不过告诉您可以这么玩）
-  beforeDestroy () {
-      document.querySelector('body').removeAttribute('style')
+  beforeDestroy() {
+    document.querySelector("body").removeAttribute("style");
   },
 
   computed: {
@@ -152,8 +174,6 @@ export default {
     },
   },
 };
-
-
 </script>
 
 <style scoped>

@@ -1,14 +1,11 @@
 <template>
-
-
-
   <div id="navbar">
-
     <ul class="shell">
-
       <!-- Logo -->
       <li class="nav_button" @click="goto('home')">
-        <span><img src="../assets/img/组 183.png" alt="" class="catlogo"></span>
+        <span
+          ><img src="../assets/img/组 183.png" alt="" class="catlogo"
+        /></span>
       </li>
 
       <li class="empty_space">
@@ -21,34 +18,60 @@
 
       <!-- Restaurant -->
       <li class="nav_button" @click="goto('restaurant')">
-        <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/cottage--v1.png" /></div>
+        <div class="size_set_pic">
+          <img src="https://img.icons8.com/doodle/48/null/cottage--v1.png" />
+        </div>
         <div class="size_set">restaurant</div>
         <ul class="detail">
-          <li><img src="https://img.icons8.com/doodle/48/null/noodles--v1.png" />view by category</li>
-          <li><img src="https://img.icons8.com/doodle/48/null/fire-element--v1.png" />hot restaurants</li>
+          <li>
+            <img
+              src="https://img.icons8.com/doodle/48/null/noodles--v1.png"
+            />view by category
+          </li>
+          <li>
+            <img
+              src="https://img.icons8.com/doodle/48/null/fire-element--v1.png"
+            />hot restaurants
+          </li>
         </ul>
       </li>
 
       <!-- Drinks -->
       <li class="nav_button" @click="goto('drinks')">
-        <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/lemonade.png" /></div>
+        <div class="size_set_pic">
+          <img src="https://img.icons8.com/doodle/48/null/lemonade.png" />
+        </div>
         <div class="size_set">drink</div>
         <ul class="detail">
-          <li><img src="https://img.icons8.com/doodle/48/null/cafe--v1.png" />view by category</li>
-          <li><img src="https://img.icons8.com/doodle/48/null/fire-element--v1.png" />hot drinks</li>
+          <li>
+            <img src="https://img.icons8.com/doodle/48/null/cafe--v1.png" />view
+            by category
+          </li>
+          <li>
+            <img
+              src="https://img.icons8.com/doodle/48/null/fire-element--v1.png"
+            />hot drinks
+          </li>
         </ul>
       </li>
 
       <!-- Favorite shop -->
-      <li class="nav_button" @click=showFavorite() type="primary" >
-        <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/likes-folder.png" /></div>
+      <li class="nav_button" @click="showFavorite()" type="primary">
+        <div class="size_set_pic">
+          <img src="https://img.icons8.com/doodle/48/null/likes-folder.png" />
+        </div>
         <div class="size_set">favorite</div>
-        
-        <el-drawer title="我是标题" :visible.sync="drawer" direction="btt" :append-to-body="true"
-          :modal-append-to-body="false" size="50" :modal="true">
-          
-            <Contents :items="items" />
-          
+
+        <el-drawer
+          title="我是标题"
+          :visible.sync="drawer"
+          direction="btt"
+          :append-to-body="true"
+          :modal-append-to-body="false"
+          size="50"
+          :modal="true"
+        >
+          <Contents :items="items" />
         </el-drawer>
       </li>
 
@@ -57,7 +80,9 @@
       </li>
 
       <li class="nav_button">
-        <div class="size_set_pic"><img src="https://img.icons8.com/doodle/48/null/name.png" /></div>
+        <div class="size_set_pic">
+          <img src="https://img.icons8.com/doodle/48/null/name.png" />
+        </div>
         <div class="size_set">Me</div>
         <!-- <ul class="information detail">
                     <li>profile picture</li>
@@ -67,46 +92,43 @@
                 </ul> -->
       </li>
     </ul>
-
   </div>
 </template>
 
 <script>
-import Contents from './Contents.vue';
+import Contents from "./Contents.vue";
 export default {
   data() {
     return {
       drawer: false,
-      direction: 'btt',
+      direction: "btt",
       items: [],
-    }
+    };
   },
   methods: {
     goto(where) {
       this.$router.push(where);
     },
     showFavorite() {
-      this.$axios.get("http://127.0.0.1:3007/shop/like")
-        .then(res => {
-          // console.log(res.data)
-          this.items = res.data.data
-          this.drawer = true
-          console.log(this.items)
-        })
-
-    }
+      this.$axios.get("http://9enamv.natappfree.cc/shop/like").then((res) => {
+        // console.log(res.data)
+        this.items = res.data.data;
+        this.drawer = true;
+        console.log(this.items);
+      });
+    },
   },
-  components:{
-    Contents
-  }
-}
+  components: {
+    Contents,
+  },
+};
 </script>
 
 <style scoped>
 * {
   margin: 0;
   padding: 0;
-  color: #804C1A;
+  color: #804c1a;
 }
 
 #navbar {
@@ -190,7 +212,7 @@ export default {
 
 .catlogo {
   width: 100px;
-  transform: scale(6, 6)
+  transform: scale(6, 6);
 }
 
 /* 抽屉 */
@@ -208,7 +230,4 @@ export default {
 /* .dr {
   z-index: 9;
 } */
-
-
-
 </style>

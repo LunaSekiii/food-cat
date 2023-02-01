@@ -3,10 +3,15 @@
     <navbar />
     <SearchBar type="resturant" id="bar" />
 
-    <button @click="selectCate()"> 种类</button>
+    <button @click="selectCate()">种类</button>
     <div class="cateBox">
       <!-- Restaurant -->
-      <div class="cate" v-for="cate in cates" :key="cate.category_id" @click="selectCate(cate)">
+      <div
+        class="cate"
+        v-for="cate in cates"
+        :key="cate.category_id"
+        @click="selectCate(cate)"
+      >
         <div>{{ cate.category }}</div>
       </div>
     </div>
@@ -16,7 +21,6 @@
 </template>
 
 <script>
-
 import SearchBar from "../components/SearchBar";
 import Contents from "../components/Contents";
 import navbar from "../components/navbar.vue";
@@ -25,40 +29,32 @@ export default {
     return {
       items: [],
       cates: [],
-      cate: ''
+      cate: "",
     };
   },
   mounted() {
-    this.$axios.get("http://127.0.0.1:3007/api/all/0")
-      .then(res => {
-        console.log(res.data)
-        this.items = res.data.data
-      }),
-      this.$axios.get("http://127.0.0.1:3007/api/shop/0")
-        .then(res => {
-          console.log(res.data)
-          this.cates = res.data.data
-        })
-
-
+    this.$axios.get("http://9enamv.natappfree.cc/api/all/0").then((res) => {
+      console.log(res.data);
+      this.items = res.data.data;
+    }),
+      this.$axios.get("http://9enamv.natappfree.cc/api/shop/0").then((res) => {
+        console.log(res.data);
+        this.cates = res.data.data;
+      });
   },
   methods: {
     selectCate() {
-      this.$axios.get("http://127.0.0.1:3007/shop/cate/1")
-        .then(res => {
-          console.log(res.data)
-          this.items = res.data.data
-        })
-    }
-
+      this.$axios.get("http://9enamv.natappfree.cc/shop/cate/1").then((res) => {
+        console.log(res.data);
+        this.items = res.data.data;
+      });
+    },
   },
   components: {
     navbar,
     SearchBar,
     Contents,
   },
-
-
 };
 </script>
 
@@ -67,7 +63,7 @@ export default {
   margin-top: 30px;
 }
 
-.cateBox{
+.cateBox {
   width: 100%;
   height: 3vh;
   display: flex;
@@ -81,9 +77,8 @@ export default {
   height: 40px;
   margin: 10px;
   padding: 5px 10px 1px 10px;
-  background-color: #FFF8E1;
+  background-color: #fff8e1;
   /* border-radius: 30px; */
   text-align: center;
-
 }
 </style>

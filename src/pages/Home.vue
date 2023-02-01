@@ -1,13 +1,12 @@
 <template>
-  
   <div>
     <top />
     <navbar />
-    <Recommend :items="items" :type_num="0"/>
-    <Recommend :items="items2" :type_num="1"/>
-    <div id="about"><img src="../assets/img/组 184.png" alt=""></div>
+    <Recommend :items="items" :type_num="0" />
+    <Recommend :items="items2" :type_num="1" />
+    <div id="about"><img src="../assets/img/组 184.png" alt="" /></div>
 
-<!-- 
+    <!-- 
     <div>Here is foodcat restaurant review website</div>
     <button @click="goto('login')">login click here!</button>
     <button @click="goto('restaurant')">restaurant review click here!</button>
@@ -22,31 +21,26 @@ import top from "../components/Head_pic.vue";
 import navbar from "../components/navbar.vue";
 import Recommend from "../components/Recommend.vue";
 
-
-
-
 export default {
   data() {
     return {
-      items:[],
-      items2:[],
-      type_num:'',
+      items: [],
+      items2: [],
+      type_num: "",
     };
   },
 
-  mounted(){
-    this.$axios.get("http://127.0.0.1:3007/api/random/0")
-    .then(res => {
-      console.log(res.data)
-      this.items = res.data.data
+  mounted() {
+    this.$axios.get("http://9enamv.natappfree.cc/api/random/0").then((res) => {
+      console.log(res.data);
+      this.items = res.data.data;
     }),
-
-    this.$axios.get("http://127.0.0.1:3007/api/random/1")
-    .then(res => {
-      console.log(res.data)
-      this.items2 = res.data.data
-    })
-
+      this.$axios
+        .get("http://9enamv.natappfree.cc/api/random/1")
+        .then((res) => {
+          console.log(res.data);
+          this.items2 = res.data.data;
+        });
   },
 
   methods: {
@@ -55,24 +49,22 @@ export default {
     },
   },
 
-  components:{
+  components: {
     top,
     navbar,
     Recommend,
-
-
-  }
+  },
 };
 </script>
 
 <style>
-*{
-  color: #804C1A;
+* {
+  color: #804c1a;
 }
-#about{
+#about {
   width: 100%;
 }
-#about img{
+#about img {
   width: 100%;
 }
 </style>
