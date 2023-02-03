@@ -9,6 +9,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
+import VueCookie from 'vue-cookie'
+
 
 // 添加请求拦截器，在请求头中加token
 axios.interceptors.request.use(
@@ -27,6 +29,7 @@ axios.interceptors.request.use(
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueRouter);
+Vue.use(VueCookie)   // 挂在在全局
 Vue.prototype.$axios = axios;
 
 Vue.use(VModal, {

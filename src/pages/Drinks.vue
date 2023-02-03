@@ -19,7 +19,7 @@ export default {
     };
   },
   mounted() {
-    this.$axios.get("http://9enamv.natappfree.cc/api/all/1").then((res) => {
+    this.$axios.get("http://127.0.0.1:3007/api/all/1").then((res) => {
       console.log(res.data);
       this.items = res.data.data;
     });

@@ -2,7 +2,11 @@
   <div id="searchBar">
     <!-- <h1>view by category</h1> -->
     <h1>All Shops</h1>
-    <div><img src="../assets/img/icons8-search-192.png" alt=""><input type="text" name="searchKey" id="searchInput" /></div>
+    <div><img src="../assets/img/icons8-search-192.png" alt=""><input type="text" name="searchKey" id="searchInput"
+        @input="handleInput()" v-model="inputText" /></div>
+    <ul>
+      <li v-for="data in datas">{{ data }}</li>
+    </ul>
     <div>
       <!-- <span>All</span> -->
     </div>
@@ -10,18 +14,40 @@
 </template>
 
 <script>
+import QueryString from "qs";
 export default {
   props: {
+    // 猪猪这是啥
     Ctype: String,
   },
   data() {
-    return {};
+    return {
+      inputText: '',
+      data: '',
+      datas: [],
+      inputStr: ''
+    };
   },
-  mounted() {},
+  mounted() { },
   methods: {
+
     goto(where) {
       this.$router.replace(where);
     },
+
+    handleInput() {
+      const queryString = QueryString.stringify({
+        inputStr:this.inputText
+      });
+
+      this.$axios.get("http://127.0.0.1:3007/api/search", {
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        data: queryString
+      }).then((res) => {
+        console.log(this.inputStr)
+        console.log(res);
+      });
+    }
   },
   computed: {
     type() {
@@ -32,9 +58,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
-*{
+* {
   color: #804C1A;
 }
+
 .searchBar {
   width: 100vw;
   height: 20vh;
@@ -46,15 +73,17 @@ export default {
   margin-top: 900px;
 }
 
-#searchInput{
+#searchInput {
   width: 800px;
   height: 60px;
-  border-radius: 100px;;
+  border-radius: 100px;
   border: 1.5px solid #A56221;
 }
-img{
+
+img {
   width: 55px;
 }
+
 nav {
   width: 20vw;
   height: 100%;
@@ -63,7 +92,7 @@ nav {
   justify-content: space-between;
 }
 
-nav > div {
+nav>div {
   width: 200px;
   /* height: 100%; */
   line-height: 100%;
@@ -74,7 +103,7 @@ nav > div {
   background-color: rgb(127, 117, 103);
 }
 
-#fav > #item {
+#fav>#item {
   position: absolute;
   /* width: 0px; */
   height: 0px;

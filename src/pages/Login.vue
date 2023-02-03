@@ -112,7 +112,7 @@ export default {
 
     register() {
       this.$axios.post(
-        "http://9enamv.natappfree.cc/api/reguser",
+        "http://127.0.0.1:3007/api/reguser",
         QueryString.stringify(
           {
             username: this.username,
@@ -130,7 +130,7 @@ export default {
     login() {
       this.$axios
         .post(
-          "http://9enamv.natappfree.cc/api/login",
+          "http://127.0.0.1:3007/api/login",
           QueryString.stringify({
             email: this.email1,
             password: this.password1,
@@ -141,7 +141,8 @@ export default {
             console.log(res);
             // window.localStorage.setItem('token', res.data.token)
             // window.localStorage.setItem('username', res.data.username)
-            Cookies.set("token", res.data.token, { expires: 1 });
+            this.$cookie.set("token", res.data.token, 1);
+            // Cookies.set("token", res.data.token, { expires: 1 });
             console.log(Cookies.get("token"));
             alert("login successfully");
             this.$router.push("/home");

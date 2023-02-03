@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       hover: false,
-      imgSrc: require('../assets/img/cat1.svg')
+      imgSrc: require('../assets/img/cat2.svg')
     }
   },
   created(){
@@ -57,11 +57,11 @@ export default {
     },
     handleMouseover() {
       this.hover = true
-      this.imgSrc = require('../assets/img/cat2.svg')
+      this.imgSrc = require('../assets/img/cat1.svg')
     },
     handleMouseleave() {
       this.hover = false
-      this.imgSrc = require('../assets/img/cat1.svg')
+      this.imgSrc = require('../assets/img/cat2.svg')
     }
   },
 };

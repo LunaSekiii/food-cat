@@ -9,7 +9,7 @@
       <img @click.stop="mark(item)" :src="likeImg(item)" alt="" id="like" />
 
       <img
-        v-bind:src="'http://9enamv.natappfree.cc/api/pic/' + item.logo"
+        v-bind:src="'http://127.0.0.1:3007/api/pic/' + item.logo"
         alt=""
         id="shopLogo"
       />
@@ -24,7 +24,7 @@
     >
       <div class="modal-body">
         <img
-          v-bind:src="'http://9enamv.natappfree.cc/api/pic/' + currentItem.logo"
+          v-bind:src="'http://127.0.0.1:3007/api/pic/' + currentItem.logo"
           alt=""
           id="logo"
         />
@@ -56,7 +56,7 @@
           </div>
           <img
             v-bind:src="
-              'http://9enamv.natappfree.cc/api/menu/' + currentItem.menu
+              'http://127.0.0.1:3007/api/menu/' + currentItem.menu
             "
             alt=""
             id="menu"
@@ -273,13 +273,13 @@ export default {
         this.likelist = this.likeList.filter((litem) => {
           return litem.shop_id != item.shop_id;
         });
-        this.deleteMark(item.shop_id);
+        this.deleteMark(item.shop_shop_id);
       }
     },
 
     getMark() {
       this.$axios
-        .get("http://9enamv.natappfree.cc/shop/like")
+        .get("http://127.0.0.1:3007/shop/like")
         .then((res) => {
           this.likeList = res.data.data;
           console.log(this.likeList);
@@ -292,7 +292,7 @@ export default {
 
     addMark(id) {
       this.$axios
-        .post(`http://9enamv.natappfree.cc/shop/like/${id}`)
+        .post(`http://127.0.0.1:3007/shop/like/${id}`)
         .then((res) => {
           console.log(res.data);
         })
@@ -304,8 +304,7 @@ export default {
 
     deleteMark(id) {
       this.$axios
-        .delete(`http://9enamv.natappfree.cc/shop/like`, {
-          data: { shop_shop_id: id },
+        .delete(`http://127.0.0.1:3007/shop/like/${id}`, {
         })
         .then((res) => {
           console.log(res.data);
@@ -320,7 +319,7 @@ export default {
       if (this.value != "") {
         this.$axios
           .post(
-            "http://9enamv.natappfree.cc/review/add",
+            "http://127.0.0.1:3007/review/add",
             QueryString.stringify({
               text: this.text,
               stars: this.value,
@@ -348,7 +347,7 @@ export default {
     },
 
     getUserId() {
-      this.$axios.get("http://9enamv.natappfree.cc/my/userinfo").then((res) => {
+      this.$axios.get("http://127.0.0.1:3007/my/userinfo").then((res) => {
         this.userid = res.data.data.user_id;
         this.user = res.data.data;
         console.log(this.userid);
@@ -358,7 +357,7 @@ export default {
     showReview() {
       this.$axios
         .get(
-          "http://9enamv.natappfree.cc/review/show/" + this.currentItem.shop_id
+          "http://127.0.0.1:3007/review/show/" + this.currentItem.shop_id
         )
         .then((res) => {
           console.log(res.data);
@@ -371,7 +370,7 @@ export default {
     },
     deleteReview(review) {
       this.$axios
-        .delete("http://9enamv.natappfree.cc/review/delete/" + review.review_id)
+        .delete("http://127.0.0.1:3007/review/delete/" + review.review_id)
         .then((response) => {
           // 回调函数
           console.log(response);
@@ -388,7 +387,7 @@ export default {
       }
       this.$axios
         .post(
-          "http://9enamv.natappfree.cc/review/update/" + review.review_id,
+          "http://127.0.0.1:3007/review/update/" + review.review_id,
           QueryString.stringify({
             text: this.reviewText,
             stars: this.new_value,

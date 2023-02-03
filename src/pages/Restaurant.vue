@@ -3,14 +3,15 @@
     <navbar />
     <SearchBar type="resturant" id="bar" />
 
-    <button @click="selectCate()">种类</button>
+    <!-- <button @click="selectCate()">种类</button> -->
+    <div @click="selectAll()" id="cateAll">All</div>
     <div class="cateBox">
       <!-- Restaurant -->
       <div
         class="cate"
         v-for="cate in cates"
         :key="cate.category_id"
-        @click="selectCate(cate)"
+        @click="selectCate((cate.category_id))"
       >
         <div>{{ cate.category }}</div>
       </div>
@@ -33,22 +34,28 @@ export default {
     };
   },
   mounted() {
-    this.$axios.get("http://9enamv.natappfree.cc/api/all/0").then((res) => {
+    this.$axios.get("http://127.0.0.1:3007/api/all/0").then((res) => {
       console.log(res.data);
       this.items = res.data.data;
     }),
-      this.$axios.get("http://9enamv.natappfree.cc/api/shop/0").then((res) => {
+      this.$axios.get("http://127.0.0.1:3007/api/shop/0").then((res) => {
         console.log(res.data);
         this.cates = res.data.data;
       });
   },
   methods: {
-    selectCate() {
-      this.$axios.get("http://9enamv.natappfree.cc/shop/cate/1").then((res) => {
+    selectCate(cateId) {
+      this.$axios.get(`http://127.0.0.1:3007/shop/cate/${cateId}`).then((res) => {
         console.log(res.data);
         this.items = res.data.data;
       });
     },
+    selectAll(){
+      this.$axios.get("http://127.0.0.1:3007/api/all/0").then((res) => {
+        console.log(res.data);
+        this.items = res.data.data;
+      })
+    }
   },
   components: {
     navbar,
@@ -76,9 +83,21 @@ export default {
 .cate {
   height: 40px;
   margin: 10px;
-  padding: 5px 10px 1px 10px;
+  padding: 5px 14px 5px 14px;
   background-color: #fff8e1;
-  /* border-radius: 30px; */
+  border-radius: 100px;
   text-align: center;
+  font-size: 24px;
+}
+
+#cateAll{
+  height: 40px;
+  margin: 10px auto;
+  padding: 5px 10px 0px 10px;
+  background-color: #fff8e1;
+  border-radius: 100px;
+  text-align: center;
+  width: fit-content;
+  font-size: 22px;
 }
 </style>

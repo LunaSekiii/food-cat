@@ -20,6 +20,8 @@
 import top from "../components/Head_pic.vue";
 import navbar from "../components/navbar.vue";
 import Recommend from "../components/Recommend.vue";
+import Cookies from 'js-cookie'
+
 
 export default {
   data() {
@@ -31,16 +33,17 @@ export default {
   },
 
   mounted() {
-    this.$axios.get("http://9enamv.natappfree.cc/api/random/0").then((res) => {
+    this.$axios.get("http://127.0.0.1:3007/api/random/0").then((res) => {
       console.log(res.data);
       this.items = res.data.data;
     }),
       this.$axios
-        .get("http://9enamv.natappfree.cc/api/random/1")
+        .get("http://127.0.0.1:3007/api/random/1")
         .then((res) => {
           console.log(res.data);
           this.items2 = res.data.data;
         });
+
   },
 
   methods: {
@@ -61,9 +64,11 @@ export default {
 * {
   color: #804c1a;
 }
+
 #about {
   width: 100%;
 }
+
 #about img {
   width: 100%;
 }

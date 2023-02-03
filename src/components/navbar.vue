@@ -3,9 +3,7 @@
     <ul class="shell">
       <!-- Logo -->
       <li class="nav_button" @click="goto('home')">
-        <span
-          ><img src="../assets/img/组 183.png" alt="" class="catlogo"
-        /></span>
+        <span><img src="../assets/img/组 183.png" alt="" class="catlogo" /></span>
       </li>
 
       <li class="empty_space">
@@ -24,14 +22,10 @@
         <div class="size_set">restaurant</div>
         <ul class="detail">
           <li>
-            <img
-              src="https://img.icons8.com/doodle/48/null/noodles--v1.png"
-            />view by category
+            <img src="https://img.icons8.com/doodle/48/null/noodles--v1.png" />view by category
           </li>
           <li>
-            <img
-              src="https://img.icons8.com/doodle/48/null/fire-element--v1.png"
-            />hot restaurants
+            <img src="https://img.icons8.com/doodle/48/null/fire-element--v1.png" />hot restaurants
           </li>
         </ul>
       </li>
@@ -48,29 +42,20 @@
             by category
           </li>
           <li>
-            <img
-              src="https://img.icons8.com/doodle/48/null/fire-element--v1.png"
-            />hot drinks
+            <img src="https://img.icons8.com/doodle/48/null/fire-element--v1.png" />hot drinks
           </li>
         </ul>
       </li>
 
       <!-- Favorite shop -->
-      <li class="nav_button" @click="showFavorite()" type="primary">
+      <li class="nav_button" :plain="true" @click="showFavorite()" type="primary">
         <div class="size_set_pic">
           <img src="https://img.icons8.com/doodle/48/null/likes-folder.png" />
         </div>
         <div class="size_set">favorite</div>
 
-        <el-drawer
-          title="我是标题"
-          :visible.sync="drawer"
-          direction="btt"
-          :append-to-body="true"
-          :modal-append-to-body="false"
-          size="50"
-          :modal="true"
-        >
+        <el-drawer title="我是标题" :visible.sync="drawer" direction="btt" :append-to-body="true"
+          :modal-append-to-body="false" size="50" :modal="true">
           <Contents :items="items" />
         </el-drawer>
       </li>
@@ -84,12 +69,32 @@
           <img src="https://img.icons8.com/doodle/48/null/name.png" />
         </div>
         <div class="size_set">Me</div>
-        <!-- <ul class="information detail">
-                    <li>profile picture</li>
-                    <li>username</li>
-                    <li>review count</li>
-                    <li>log out</li>
-                </ul> -->
+        <ul class="information detail" v-if="haveToken">
+
+          <li type="text" @click="dialogFormVisible = true">Change Username</li>
+          <el-dialog title="Change username" :visible.sync="dialogFormVisible" append-to-body="true">
+            <input type="text" placeholder="New Username" v-model="username">
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">Cancle</el-button>
+              <el-button type="primary" @click="changeUserName()">Submit</el-button>
+            </div>
+          </el-dialog>
+
+          <li type="text" @click="dialogFormVisible1 = true">Change Password</li>
+          <el-dialog title="Change password" :visible.sync="dialogFormVisible1" append-to-body="true">
+            <input type="passowrd" placeholder="old password" v-model="oldpassword">
+            <input type="passowrd" placeholder="new password" v-model="newpassword">
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible1 = false">Cancle</el-button>
+              <el-button type="primary" @click="changePwd()">Submit</el-button>
+            </div>
+          </el-dialog>
+
+          <li @click="logOut">log out</li>
+        </ul>
+        <ul class="information detail" v-if="!haveToken">
+          <li @click="goto('login')">Login Now</li>
+        </ul>
       </li>
     </ul>
   </div>
@@ -97,26 +102,134 @@
 
 <script>
 import Contents from "./Contents.vue";
+import Cookies from 'js-cookie';
+import QueryString from "qs";
 export default {
   data() {
     return {
       drawer: false,
       direction: "btt",
       items: [],
+      haveCookie: false,
+      dialogFormVisible: false,
+      username: '',
+      dialogFormVisible1: false,
+      oldpassword: '',
+      newpassword: '',
     };
+  },
+  mounted() {
+    if (!document.cookie) {
+      console.log('Cookie is empty')
+      this.haveCookie = false
+    } else {
+      console.log('Cookie is not empty')
+      this.haveCookie = true
+    }
+  },
+  computed: {
+    haveToken() {
+      return document.cookie.includes('token');
+    },
   },
   methods: {
     goto(where) {
       this.$router.push(where);
     },
     showFavorite() {
-      this.$axios.get("http://9enamv.natappfree.cc/shop/like").then((res) => {
+      if (!this.haveToken) {
+        this.$message({
+          message: 'Login to access more features.',
+          type: 'warning'
+        });
+        return;
+      }
+      this.$axios.get("http://127.0.0.1:3007/shop/like").then((res) => {
         // console.log(res.data)
         this.items = res.data.data;
         this.drawer = true;
         console.log(this.items);
       });
     },
+    logOut() {
+      Cookies.remove('token');
+      this.$forceUpdate();
+    },
+    changeUserName() {
+      if (this.value != "") {
+        this.$axios
+          .put(
+            "http://127.0.0.1:3007/my/userinfo",
+            QueryString.stringify({
+              username: this.username,
+            })
+          )
+          .then((res) => {
+            if (res.data.status === 0) {
+              console.log(res);
+              this.$message({
+                message: 'Change username successfully',
+                type: 'success'
+              });
+
+            } else {
+              this.$message({
+                message: 'Change fail, try again later',
+                type: 'warning'
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            console.log("请求错误");
+          });
+      } else {
+        this.$message({
+          message: 'Every kitten should have its own name! The username is not allowed to be empty, give yourself a cool name!',
+          type: 'warning'
+        });
+      }
+      this.dialogFormVisible = false
+
+    },
+    changePwd() {
+      if (this.value != "") {
+        this.$axios
+          .post(
+            "http://127.0.0.1:3007/my/updatepwd",
+            QueryString.stringify({
+              oldPwd: this.oldpassword,
+              newPwd: this.newpassword,
+            })
+          )
+          .then((res) => {
+            if (res.data.status === 0) {
+              console.log(res);
+              this.$message({
+                message: 'Change password successfully',
+                type: 'success'
+              });
+
+            } else {
+              this.$message({
+                message: 'Change fail, try again later',
+                type: 'warning'
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            console.log("请求错误");
+          });
+      } else {
+        this.$message({
+          message: 'Every kitten should have its own name! The username is not allowed to be empty, give yourself a cool name!',
+          type: 'warning'
+        });
+      }
+      this.dialogFormVisible1 = false
+
+    }
   },
   components: {
     Contents,
