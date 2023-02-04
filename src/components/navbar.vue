@@ -137,7 +137,7 @@ export default {
       this.$router.push(where);
     },
     showFavorite() {
-      this.$axios.get("http://9enamv.natappfree.cc/shop/like").then((res) => {
+      this.$axios.get("http://127.0.0.1:3007/my/userinfo").then((res) => {
         // console.log(res.data)
         this.items = res.data.data;
         this.drawer = true;

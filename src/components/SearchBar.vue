@@ -22,10 +22,10 @@ export default {
   },
   data() {
     return {
-      inputText: '',
       data: '',
       datas: [],
-      inputStr: ''
+      inputStr: '',
+      inputText: ''
     };
   },
   mounted() { },
@@ -37,8 +37,9 @@ export default {
 
     handleInput() {
       const queryString = QueryString.stringify({
-        inputStr:this.inputText
+        name:this.inputText
       });
+      
 
       this.$axios.get("http://127.0.0.1:3007/api/search", {
         headers: { "content-type": "application/x-www-form-urlencoded" },
@@ -46,6 +47,7 @@ export default {
       }).then((res) => {
         console.log(this.inputStr)
         console.log(res);
+        console.log(this.inputText)
       });
     }
   },
