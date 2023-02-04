@@ -249,7 +249,6 @@ export default {
     isMarked(item) {
       for (var like of this.likeList) {
         if (item.shop_id == like.shop_id) {
-          // console.log(item.shop_id);
           return true;
         }
       }
@@ -266,14 +265,15 @@ export default {
 
     mark(item) {
       // alert(item.shop_id);
-      if (!this.isMarked(item.shop_id)) {
+      if (!this.isMarked(item)) {
         this.likeList.push(item);
         this.addMark(item.shop_id);
       } else {
-        this.likelist = this.likeList.filter((litem) => {
+        this.likeList = this.likeList.filter((litem) => {
           return litem.shop_id != item.shop_id;
         });
-        this.deleteMark(item.shop_shop_id);
+
+        this.deleteMark(item.shop_id);
       }
     },
 

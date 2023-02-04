@@ -137,14 +137,7 @@ export default {
       this.$router.push(where);
     },
     showFavorite() {
-      if (!this.haveToken) {
-        this.$message({
-          message: 'Login to access more features.',
-          type: 'warning'
-        });
-        return;
-      }
-      this.$axios.get("http://127.0.0.1:3007/shop/like").then((res) => {
+      this.$axios.get("http://9enamv.natappfree.cc/shop/like").then((res) => {
         // console.log(res.data)
         this.items = res.data.data;
         this.drawer = true;
