@@ -130,8 +130,12 @@
               <p id="review_text">{{ review.text }}</p>
               <p id="review_date">{{ review.date }}</p>
               <div class="delete-update-container">
-                <span v-if="userid === review.user_user_id" id="delete">
-                  <el-popover placement="top" width="353" v-model="visible">
+                <span v-if="userid === review.user_user_id" class="delete">
+                  <el-popover
+                    placement="top"
+                    width="353"
+                    v-model="visible[review.review_id]"
+                  >
                     <p>
                       Are you sure you wanna delete your comment... that's
                       valuable to us TvT
@@ -140,7 +144,7 @@
                       <el-button
                         size="mini"
                         type="text"
-                        @click="visible = false"
+                        @click="visible[review.review_id] = false"
                         >No</el-button
                       >
                       <el-button
@@ -210,12 +214,11 @@ export default {
       shop_id: 0,
       review: "",
       reviews: [],
-      visible: false,
       reviewText: "",
       new_value: 0,
       userid: 0,
       user: [],
-      visible: false,
+      visible: {},
       likeList: [],
     };
   },
@@ -362,6 +365,9 @@ export default {
         .then((res) => {
           console.log(res.data);
           this.reviews = res.data.data;
+          this.reviews.forEach((v) => {
+            this.visible[v.review_id] = false;
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -641,6 +647,7 @@ export default {
 }
 
 .review {
+  position: relative;
   margin: 0 auto;
   margin-top: 10px;
   border-bottom: 1px dashed #a56221;
@@ -654,7 +661,7 @@ export default {
   color: #7c4b1c;
 }
 
-#delete img {
+.delete img {
   width: 50px;
 }
 
