@@ -33,18 +33,18 @@ export default {
     };
   },
   mounted() {
-    this.$axios.get("http://9enamv.natappfree.cc/api/all/0").then((res) => {
+    this.$axios.get("http://uz6mb8.natappfree.cc/api/all/0").then((res) => {
       console.log(res.data);
       this.items = res.data.data;
     }),
-      this.$axios.get("http://9enamv.natappfree.cc/api/shop/0").then((res) => {
+      this.$axios.get("http://uz6mb8.natappfree.cc/api/shop/0").then((res) => {
         console.log(res.data);
         this.cates = res.data.data;
       });
   },
   methods: {
     selectCate() {
-      this.$axios.get("http://9enamv.natappfree.cc/shop/cate/1").then((res) => {
+      this.$axios.get("http://uz6mb8.natappfree.cc/shop/cate/1").then((res) => {
         console.log(res.data);
         this.items = res.data.data;
       });

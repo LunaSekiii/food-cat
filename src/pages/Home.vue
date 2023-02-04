@@ -31,12 +31,12 @@ export default {
   },
 
   mounted() {
-    this.$axios.get("http://9enamv.natappfree.cc/api/random/0").then((res) => {
+    this.$axios.get("http://uz6mb8.natappfree.cc/api/random/0").then((res) => {
       console.log(res.data);
       this.items = res.data.data;
     }),
       this.$axios
-        .get("http://9enamv.natappfree.cc/api/random/1")
+        .get("http://uz6mb8.natappfree.cc/api/random/1")
         .then((res) => {
           console.log(res.data);
           this.items2 = res.data.data;

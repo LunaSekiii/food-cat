@@ -110,7 +110,7 @@ export default {
       this.$router.push(where);
     },
     showFavorite() {
-      this.$axios.get("http://9enamv.natappfree.cc/shop/like").then((res) => {
+      this.$axios.get("http://uz6mb8.natappfree.cc/shop/like").then((res) => {
         // console.log(res.data)
         this.items = res.data.data;
         this.drawer = true;

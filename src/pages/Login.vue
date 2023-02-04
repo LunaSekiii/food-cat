@@ -112,7 +112,7 @@ export default {
 
     register() {
       this.$axios.post(
-        "http://9enamv.natappfree.cc/api/reguser",
+        "http://uz6mb8.natappfree.cc/api/reguser",
         QueryString.stringify(
           {
             username: this.username,
@@ -130,7 +130,7 @@ export default {
     login() {
       this.$axios
         .post(
-          "http://9enamv.natappfree.cc/api/login",
+          "http://uz6mb8.natappfree.cc/api/login",
           QueryString.stringify({
             email: this.email1,
             password: this.password1,
