@@ -153,7 +153,8 @@ export default {
     },
     logOut() {
       Cookies.remove('token');
-      this.$forceUpdate();
+      this.$router.go(0)
+location.reload()
     },
     changeUserName() {
       if (this.value != "") {
